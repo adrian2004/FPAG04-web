@@ -10,20 +10,16 @@ import LineChart from '../../assets/components/charts/charts';
 import { lineChartDataTotalSpent, lineChartOptionsTotalSpent } from '../../variables/charts';
 
 const HomePage = () => {
-    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await fetch('http://localhost:5000/home', {
+                const response = await fetch('http://localhost:5000/api/auth/validate', {
                     credentials: 'include',
                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setMessage(data.message);
-                } else {
+                if (!response.ok) {
                     navigate('/login');
                 }
             } catch (error) {

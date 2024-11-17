@@ -7,7 +7,7 @@ const LoginPage = () => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                await fetch('http://localhost:5000/logout', {
+                await fetch('http://localhost:5000/api/auth/logout', {
                     credentials: 'include',
                 });
 
@@ -16,7 +16,6 @@ const LoginPage = () => {
                 navigate('/login');
             }
         };
-
         checkAuth();
     }, [navigate]);
 
