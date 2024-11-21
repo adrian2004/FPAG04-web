@@ -16,16 +16,16 @@ const LoginPage = () => {
         e.preventDefault()
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/api/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
-                credentials: 'include',
             });
 
             if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+
                 navigate('/');
             } else {
                 let responseJson = await response.json();
@@ -40,15 +40,16 @@ const LoginPage = () => {
                             cancelButtonText: 'Cancelar',
                             preConfirm: async () => {
                                 try {
-                                    const res = await fetch('http://localhost:5000/api/auth/login', {
+                                    const res = await fetch(process.env.REACT_APP_API_URL + '/api/auth/login', {
                                         method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
+                                        headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ email, password, token: responseJson.token }),
-                                        credentials: 'include'
-                                    });                                    
-                                    if (res.ok) navigate('/'); 
+                                    });
+                                    if (res.ok) {
+                                        localStorage.setItem('token', responseJson.token);
+                                        
+                                        navigate('/'); 
+                                    }
                                 } catch (error) {
                                     console.log('NOTOK');
                                 }
@@ -119,7 +120,7 @@ const LoginPage = () => {
                             </p>
                         </div>
                         <a
-                            href="#"
+                            href="/recover"
                             className="text-sm font-medium text-brand-500 hover:text-brand-600 hover:text-[#0c53a2] transition duration-200"
                         >
                             Esqueceu a senha?

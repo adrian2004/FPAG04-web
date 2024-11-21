@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -6,22 +6,30 @@ const LoginPage = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            try {
-                await fetch('http://localhost:5000/api/auth/logout', {
-                    credentials: 'include',
-                });
+            const token = localStorage.getItem('token');
 
-                navigate('/login');
+            try {
+                await fetch(process.env.REACT_APP_API_URL + '/api/auth/logout', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                localStorage.clear();
+
             } catch (error) {
+                console.log(error);
+            }
+            finally {
+                localStorage.clear();
                 navigate('/login');
             }
         };
         checkAuth();
     }, [navigate]);
 
-    return (
-        <h1></h1>
-    );
+    return;
 };
 
 export default LoginPage;

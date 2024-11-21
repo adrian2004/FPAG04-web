@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dashboardIcon from '../../assets/img/home/dashboard-icon.png';
 import homeIcon from '../../assets/img/home/home.png';
@@ -14,15 +14,22 @@ const HomePage = () => {
 
     useEffect(() => {
         const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+
             try {
-                const response = await fetch('http://localhost:5000/api/auth/validate', {
-                    credentials: 'include',
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
                 });
 
                 if (!response.ok) {
                     navigate('/login');
                 }
             } catch (error) {
+                console.error('Erro ao conectar ao servidor:', error);
                 navigate('/login');
             }
         };
