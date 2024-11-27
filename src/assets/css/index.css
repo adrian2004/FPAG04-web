@@ -31,4 +31,6 @@ input:checked.defaultCheckbox::before {
 
 .bg-image {
     background-image: url(../../assets/img/background/bg.png);
+	background-size: cover;
+    background-position: center;
 }

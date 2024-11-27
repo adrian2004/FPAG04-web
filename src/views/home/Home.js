@@ -8,6 +8,12 @@ import { MdBarChart, MdAccountCircle, MdGroup, MdOutlineCalendarToday, MdArrowDr
 import Card from '../../assets/components/card/Card';
 import LineChart from '../../assets/components/charts/charts';
 import { lineChartDataTotalSpent, lineChartOptionsTotalSpent } from '../../variables/charts';
+import { people } from '../../variables/people';
+import statusImage from '../../assets/img/home/Status.jpg';
+import performance from '../../assets/img/home/Performance.jpg';
+import seguranca from '../../assets/img/home/Seguranca.jpg';
+import { links } from '../../variables/links';
+import { stats } from '../../variables/stats';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -38,68 +44,155 @@ const HomePage = () => {
     }, [navigate]);
 
     const homeStyle = {
-        backgroundColor: '#f0f0f0', // Substitua pela cor desejada
-        height: '100vh',
+        backgroundColor: '#f0f0f0',
+        height: '100%',
         width: '100%',
     };
 
     return (
         <div style={homeStyle}>
-            <div>
-                <div className="grid pt-20 pl-20 pr-20 grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
-                    <Widget
-                        icon={<MdAccountCircle className="h-7 w-7" />}
-                        title={"Users"}
-                        subtitle={"$340.5"}
-                    />
-                    <Widget
-                        icon={<MdGroup className="h-6 w-6" />}
-                        title={"Spend this month"}
-                        subtitle={"$642.39"}
-                    />
-                    <Widget
-                        icon={<MdBarChart className="h-7 w-7" />}
-                        title={"Sales"}
-                        subtitle={"$574.34"}
-                    />
-                </div>
-
-                <div className="p-20">
-                    <Card extra="!p-[20px] text-center">
-                        <div className="flex justify-between">
-                            <button className="linear mt-1 flex items-center justify-center gap-2 rounded-lg bg-lightPrimary p-2 text-gray-600 transition duration-200 hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200">
-                                <MdOutlineCalendarToday />
-                                <span className="text-sm font-medium text-gray-600">This month</span>
-                            </button>
-                            <button className="!linear z-[1] flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-brand-500 !transition !duration-200 hover:bg-gray-100 active:bg-gray-200">
-                                <MdBarChart className="h-6 w-6" />
-                            </button>
-                        </div>
-
-                        <div className="flex h-full w-full flex-row justify-between sm:flex-wrap lg:flex-nowrap 2xl:overflow-hidden">
-                            <div className="flex flex-col">
-                                <p className="mt-[20px] text-3xl font-bold text-navy-700">
-                                    $37.5K
-                                </p>
-                                <div className="flex flex-col items-start">
-                                    <p className="mt-2 text-sm text-gray-600">Total Spent</p>
-                                    <div className="flex flex-row items-center justify-center">
-                                        <MdArrowDropUp className="font-medium text-green-500" />
-                                        <p className="text-sm font-bold text-green-500"> +2.45% </p>
+            <div className="pt-10">
+                <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:py-5">
+                    <h2 className="text-base/7 font-semibold text-[#0c53a2]">Monitoramento</h2>
+                    <p className="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
+                        Veja em tempo real quem está online.
+                    </p>
+                    <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+                        <div className="relative lg:row-span-2">
+                            <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
+                            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+                                <div className="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+                                    <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
+                                        Monitoramento de Status
+                                    </p>
+                                    <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                                        Veja todos os usuário que estão online no momento.
+                                    </p>
+                                </div>
+                                <div className="relative min-h-[30rem] w-full grow [container-type:inline-size] max-lg:mx-auto max-lg:max-w-sm">
+                                    <div className="absolute inset-x-10 bottom-0 top-10 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
+                                        <img
+                                            className="size-full object-cover object-top"
+                                            src={statusImage}
+                                            alt=""
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div className="h-full w-full">
-                                <LineChart
-                                    options={lineChartOptionsTotalSpent}
-                                    series={lineChartDataTotalSpent}
-                                />
-                            </div>
+                            <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-l-[2rem]"></div>
                         </div>
-                    </Card>
+                        <div className="relative max-lg:row-start-1">
+                            <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem]"></div>
+                            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+                                <div className="px-8 pt-8 sm:px-10 sm:pt-10">
+                                    <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Melhoria</p>
+                                    <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                                        Acompanhe a performance dos seus usuários e do uso do sistema.
+                                    </p>
+                                </div>
+                                <div className="flex flex-1 items-center justify-center px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
+                                    <img
+                                        className="w-full max-lg:max-w-xs"
+                                        src={performance}
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem]"></div>
+                        </div>
+                        <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
+                            <div className="absolute inset-px rounded-lg bg-white"></div>
+                            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                                <div className="px-8 pt-8 sm:px-10 sm:pt-10">
+                                    <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Segurança</p>
+                                    <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                                        Propondo sempre a melhor segurança para os usuários cadastrados.
+                                    </p>
+                                </div>
+                                <div className="flex flex-1 items-center [container-type:inline-size] max-lg:py-6 lg:pb-2">
+                                    <img
+                                        className="h-[min(152px,40cqw)] object-cover"
+                                        src={seguranca}
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                            <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
+                        </div>
+                        <div className="relative lg:row-span-2">
+                            <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+                                <div className="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+                                    <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
+                                        Funcionamento API
+                                    </p>
+                                    <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
+                                        Teste a API e veja como é o funcionamento do fluxo de dados.
+                                    </p>
+                                </div>
+                                <div className="relative min-h-[30rem] w-full grow">
+                                    <div className="absolute bottom-0 left-10 right-0 top-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
+                                        <div className="flex bg-gray-800/40 ring-1 ring-white/5">
+                                            <div className="-mb-px flex text-sm/6 font-medium text-gray-400">
+                                                <div className="border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white">
+                                                    Login.js
+                                                </div>
+                                                <div className="border-r border-gray-600/10 px-4 py-2">Auth.js</div>
+                                            </div>
+                                        </div>
+                                        <div className="px-6 pb-14 pt-6">{/* Your code example */}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="w-full bg-[#0c53a2] rounded-t-[50px]">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <p className="mt-2 pt-10 text-pretty text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-balance">
+                            Eai, quem está on?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-center justify-center bg-[#0c53a2] py-10">
+                <div className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <ul role="list" className="divide-y divide-gray-100">
+                        {people.map((person) => (
+                            <li key={person.email} className="flex justify-between gap-x-6 py-5">
+                                <div className="flex min-w-0 gap-x-4">
+                                    <img
+                                        alt=""
+                                        src={person.imageUrl}
+                                        className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                                    />
+                                    <div className="min-w-0 flex-auto">
+                                        <p className="text-sm font-semibold text-gray-900">{person.name}</p>
+                                        <p className="mt-1 truncate text-xs text-gray-500">{person.email}</p>
+                                    </div>
+                                </div>
+                                <div className="shrink-0 sm:flex sm:flex-col sm:items-end">
+                                    <p className="text-sm text-gray-900">{person.role}</p>
+                                    {person.lastSeen ? (
+                                        <p className="mt-1 text-xs text-gray-500">
+                                            Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
+                                        </p>
+                                    ) : (
+                                        <div className="mt-1 flex items-center gap-x-1.5">
+                                            <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                            </div>
+                                            <p className="text-xs text-gray-500">Online</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
-                <div class="absolute inset-x-0 bottom-0 h-16 mb-16">
+                <div class="fixed inset-x-0 bottom-0 h-16 mb-4">
                     <div
                         class="flex items-center justify-between bg-white bg-opacity-80 backdrop-blur-md rounded-full px-6 py-3 shadow-lg w-[20rem] mx-auto transition-all duration-300 hover:shadow-xl hover:bg-opacity-90"
                     >
@@ -123,7 +216,77 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+            <div className=" overflow-hidden py-5 sm:pt-10 sm:pb-40">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mx-auto max-w-2xl lg:mx-0">
+                        <h2 className="text-5xl font-semibold tracking-tight text-[#0c53a2] sm:text-7xl">Work with us</h2>
+                        <p className="mt-8 text-pretty text-black font-medium text-gray-300 sm:text-xl/8">
+                            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
+                            fugiat veniam occaecat fugiat.
+                        </p>
+                    </div>
+                    <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
+                        <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base/7 font-semibold text-[#0c53a2] sm:grid-cols-2 md:flex lg:gap-x-10">
+                            {links.map((link) => (
+                                <a key={link.name} href={link.href}>
+                                    {link.name} <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            ))}
+                        </div>
+                        <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
+                            {stats.map((stat) => (
+                                <div key={stat.name} className="flex flex-col-reverse gap-1">
+                                    <dt className="text-base/7 text-black">{stat.name}</dt>
+                                    <dd className="text-4xl font-semibold tracking-tight text-[#0c53a2]">{stat.value}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white rounded-t-[50px] pt-5 pb-20">
+                <div class="container mx-auto text-center">
+                    <div class="flex justify-center items-center mb-6">
+                        <img src="/path/to/logo.png" alt="Motion Logo" class="h-8 w-auto mr-2"/>
+                            <h1 class="text-xl font-semibold text-purple-600">Interfocus</h1>
+                    </div>
+
+                    <nav class="mb-6">
+                        <ul class="flex flex-wrap justify-center space-x-6 text-sm text-gray-600">
+                            <li><a href="#" class="hover:text-purple-600">About</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Features</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Blog</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Resources</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Partners</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Help</a></li>
+                            <li><a href="#" class="hover:text-purple-600">Terms</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="flex justify-center space-x-6 mb-6">
+                        <a href="#" class="text-gray-600 hover:text-purple-600">
+                            <img src="/path/to/facebook-icon.svg" alt="Facebook" class="h-6 w-6"/>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">
+                            <img src="/path/to/twitter-icon.svg" alt="Twitter" class="h-6 w-6"/>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">
+                            <img src="/path/to/github-icon.svg" alt="GitHub" class="h-6 w-6"/>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">
+                            <img src="/path/to/linkedin-icon.svg" alt="LinkedIn" class="h-6 w-6"/>
+                        </a>
+                        <a href="#" class="text-gray-600 hover:text-purple-600">
+                            <img src="/path/to/instagram-icon.svg" alt="Instagram" class="h-6 w-6"/>
+                        </a>
+                    </div>
+
+                    <p class="text-sm text-gray-500">
+                        © 2023 Motion Tailwind CSS Library. All rights reserved.
+                    </p>
+                </div>
+            </footer>
+        </div >
     );
 };
 
