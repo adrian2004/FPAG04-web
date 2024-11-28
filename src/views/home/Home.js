@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import dashboardIcon from '../../assets/img/home/dashboard-icon.png';
+import apiIcon from '../../assets/img/home/api.png';
 import homeIcon from '../../assets/img/home/home.png';
 import logoutIcon from '../../assets/img/home/logout.png';
-import Widget from '../../assets/components/widget/Widget';
-import { MdBarChart, MdAccountCircle, MdGroup, MdOutlineCalendarToday, MdArrowDropUp } from 'react-icons/md';
-import Card from '../../assets/components/card/Card';
-import LineChart from '../../assets/components/charts/charts';
-import { lineChartDataTotalSpent, lineChartOptionsTotalSpent } from '../../variables/charts';
 import { people } from '../../variables/people';
 import statusImage from '../../assets/img/home/Status.jpg';
 import performance from '../../assets/img/home/Performance.jpg';
 import seguranca from '../../assets/img/home/Seguranca.jpg';
 import { links } from '../../variables/links';
 import { stats } from '../../variables/stats';
+import { SocialIcon } from 'react-social-icons'
+import Footer from '../../assets/img/home/footer.png';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -47,6 +44,23 @@ const HomePage = () => {
         backgroundColor: '#f0f0f0',
         height: '100%',
         width: '100%',
+    };
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const totalPages = Math.ceil(people.length / itemsPerPage);
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const visiblePeople = people.slice(startIndex, endIndex);
+
+    const nextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const prevPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
     return (
@@ -129,6 +143,9 @@ const HomePage = () => {
                                     <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
                                         Teste a API e veja como é o funcionamento do fluxo de dados.
                                     </p>
+                                    <a href="#">
+                                        <span className="mt-2 text-sm/6 font-medium text-[#0c53a2] hover:underline">Testar API</span>
+                                    </a>
                                 </div>
                                 <div className="relative min-h-[30rem] w-full grow">
                                     <div className="absolute bottom-0 left-10 right-0 top-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl">
@@ -158,8 +175,11 @@ const HomePage = () => {
             </div>
             <div className="flex items-center justify-center bg-[#0c53a2] py-10">
                 <div className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                    <ul role="list" className="divide-y divide-gray-100">
-                        {people.map((person) => (
+                    <ul
+                        role="list"
+                        className="divide-y divide-gray-100 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 hover:scrollbar-thumb-gray-500"
+                    >
+                        {visiblePeople.map((person) => (
                             <li key={person.email} className="flex justify-between gap-x-6 py-5">
                                 <div className="flex min-w-0 gap-x-4">
                                     <img
@@ -173,56 +193,69 @@ const HomePage = () => {
                                     </div>
                                 </div>
                                 <div className="shrink-0 sm:flex sm:flex-col sm:items-end">
-                                    <p className="text-sm text-gray-900">{person.role}</p>
-                                    {person.lastSeen ? (
-                                        <p className="mt-1 text-xs text-gray-500">
-                                            Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
-                                        </p>
-                                    ) : (
-                                        <div className="mt-1 flex items-center gap-x-1.5">
-                                            <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                                            </div>
-                                            <p className="text-xs text-gray-500">Online</p>
+                                    <div className="mt-1 flex items-center gap-x-1.5">
+                                        <div className="flex-none rounded-full bg-emerald-500/20 p-1">
+                                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                         </div>
-                                    )}
+                                        <p className="text-xs text-gray-500 mr-5">Online</p>
+                                    </div>
                                 </div>
                             </li>
                         ))}
                     </ul>
+
+                    {/* Controles de Paginação */}
+                    <div className="flex justify-between items-center mt-4">
+                        <button
+                            onClick={prevPage}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                        >
+                            Previous
+                        </button>
+                        <p className="text-sm text-gray-600">
+                            Page {currentPage} of {totalPages}
+                        </p>
+                        <button
+                            onClick={nextPage}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
 
-                <div class="fixed inset-x-0 bottom-0 h-16 mb-4">
+                <div class="fixed z-50 inset-x-0 bottom-0 h-16 mb-4">
                     <div
                         class="flex items-center justify-between bg-white bg-opacity-80 backdrop-blur-md rounded-full px-6 py-3 shadow-lg w-[20rem] mx-auto transition-all duration-300 hover:shadow-xl hover:bg-opacity-90"
                     >
                         <button
-                            class="text-red-500 hover:text-red-600 mx-2 transition-transform duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500 rounded-full"
+                            class="text-red-500 hover:text-red-600 mx-2 transition-transform duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 rounded-full"
                         >
-                            <img src={dashboardIcon} alt="Dashboard Icon" class="h-6 w-6" />
+                            <img src={apiIcon} alt="Dashboard Icon" class="h-6 w-6" />
 
                         </button>
                         <button
-                            class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-full"
+                            class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out hover:rotate-12 focus:outline-none focus:ring-2 rounded-full"
                         >
                             <img src={homeIcon} alt="Home Icon" class="h-6 w-6" />
                         </button>
 
                         <a
-                            href='/logout' class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out focus:outline-none hover:scale-110 focus:ring-2 focus:ring-gray-500 rounded-full"
+                            href='/logout' class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out focus:outline-none hover:scale-110 focus:ring-2 rounded-full"
                         >
                             <img src={logoutIcon} alt="Dashboard Icon" class="h-6 w-6" />
                         </a>
                     </div>
                 </div>
             </div>
-            <div className=" overflow-hidden py-5 sm:pt-10 sm:pb-40">
+            <div className=" overflow-hidden py-5 sm:pt-10 sm:pb-20">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:mx-0">
-                        <h2 className="text-5xl font-semibold tracking-tight text-[#0c53a2] sm:text-7xl">Work with us</h2>
-                        <p className="mt-8 text-pretty text-black font-medium text-gray-300 sm:text-xl/8">
-                            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                            fugiat veniam occaecat fugiat.
+                        <h2 className="text-5xl font-semibold tracking-tight text-[#0c53a2] sm:text-7xl">Desenvolvimento</h2>
+                        <p className="mt-8 text-pretty text-black font-medium text-black sm:text-xl/8">
+                            Como foi a trilha e o time que realizou o projeto? Veja os responsáveis e em números como foi o desenvolvimento.
                         </p>
                     </div>
                     <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
@@ -247,42 +280,24 @@ const HomePage = () => {
             <footer class="bg-white rounded-t-[50px] pt-5 pb-20">
                 <div class="container mx-auto text-center">
                     <div class="flex justify-center items-center mb-6">
-                        <img src="/path/to/logo.png" alt="Motion Logo" class="h-8 w-auto mr-2"/>
-                            <h1 class="text-xl font-semibold text-purple-600">Interfocus</h1>
+                        <img src={Footer} alt="Motion Logo" class="h-12 w-auto mr-2" />
                     </div>
-
-                    <nav class="mb-6">
-                        <ul class="flex flex-wrap justify-center space-x-6 text-sm text-gray-600">
-                            <li><a href="#" class="hover:text-purple-600">About</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Features</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Blog</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Resources</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Partners</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Help</a></li>
-                            <li><a href="#" class="hover:text-purple-600">Terms</a></li>
-                        </ul>
-                    </nav>
 
                     <div class="flex justify-center space-x-6 mb-6">
-                        <a href="#" class="text-gray-600 hover:text-purple-600">
-                            <img src="/path/to/facebook-icon.svg" alt="Facebook" class="h-6 w-6"/>
+                        <a href="#">
+                            <SocialIcon url="https://www.instagram.com/interfocus.tecnologia?igsh=YmR2Mnd2ejE5ZHpq" network="instagram" bgColor="#0c53a2" />
                         </a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">
-                            <img src="/path/to/twitter-icon.svg" alt="Twitter" class="h-6 w-6"/>
+                        <a href="#">
+                            <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" network="facebook" bgColor="#0c53a2" />
                         </a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">
-                            <img src="/path/to/github-icon.svg" alt="GitHub" class="h-6 w-6"/>
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">
-                            <img src="/path/to/linkedin-icon.svg" alt="LinkedIn" class="h-6 w-6"/>
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-purple-600">
-                            <img src="/path/to/instagram-icon.svg" alt="Instagram" class="h-6 w-6"/>
+                        <a href="#">
+                            <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" bgColor="#0c53a2" />
                         </a>
                     </div>
 
-                    <p class="text-sm text-gray-500">
-                        © 2023 Motion Tailwind CSS Library. All rights reserved.
+                    <p className="text-sm">
+                        © {new Date().getFullYear()} <span className="font-semibold">Unimar</span> &{" "}
+                        <span className="font-semibold">Interfocus</span>. Todos os direitos reservados.
                     </p>
                 </div>
             </footer>
