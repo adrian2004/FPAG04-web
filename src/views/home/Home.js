@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import apiIcon from '../../assets/img/home/api.png';
 import homeIcon from '../../assets/img/home/home.png';
 import logoutIcon from '../../assets/img/home/logout.png';
-import { people } from '../../variables/people';
+// import { people } from '../../variables/people';
 import statusImage from '../../assets/img/home/Status.jpg';
 import performance from '../../assets/img/home/Performance.jpg';
 import seguranca from '../../assets/img/home/Seguranca.jpg';
@@ -14,11 +14,16 @@ import Footer from '../../assets/img/home/footer.png';
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const [people, setPeople] = useState([]);
+    const [visiblePeople, setVisiblePeople] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-
             try {
                 const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
                     method: 'GET',
@@ -38,22 +43,45 @@ const HomePage = () => {
         };
 
         checkAuth();
-    }, [navigate]);
+    }, [navigate, token]);
 
-    const homeStyle = {
-        backgroundColor: '#f0f0f0',
-        height: '100%',
-        width: '100%',
-    };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    useEffect(() => {
+        const fetchSessions = async () => {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sessions/active`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-    const totalPages = Math.ceil(people.length / itemsPerPage);
+                if (response.ok) {
+                    const peopleData = (await response.json()).sessions;
+                    setPeople(peopleData);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const visiblePeople = people.slice(startIndex, endIndex);
+                    const itemsPerPage = 5;
+                    setTotalPages(Math.ceil(peopleData.length / itemsPerPage));
+                    setVisiblePeople(peopleData.slice(0, itemsPerPage));
+                }
+            } catch (error) {
+                console.error('Erro ao obter lista de sessões:', error);
+                setPeople([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSessions();
+    }, [token]);
+
+    useEffect(() => {
+        const itemsPerPage = 5;
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setVisiblePeople(people.slice(startIndex, endIndex));
+    }, [currentPage, people]);
 
     const nextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -61,6 +89,16 @@ const HomePage = () => {
 
     const prevPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
+
+    const homeStyle = {
+        backgroundColor: '#f0f0f0',
+        height: '100%',
+        width: '100%',
     };
 
     return (
@@ -143,8 +181,8 @@ const HomePage = () => {
                                     <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
                                         Teste a API e veja como é o funcionamento do fluxo de dados.
                                     </p>
-                                    <a href="#">
-                                        <span className="mt-2 text-sm/6 font-medium text-[#0c53a2] hover:underline">Testar API</span>
+                                    <a href="/api-docs">
+                                        <span className="mt-2 text-sm/6 font-medium text-[#0c53a2] hover:underline">Documentação da API</span>
                                     </a>
                                 </div>
                                 <div className="relative min-h-[30rem] w-full grow">
@@ -152,12 +190,16 @@ const HomePage = () => {
                                         <div className="flex bg-gray-800/40 ring-1 ring-white/5">
                                             <div className="-mb-px flex text-sm/6 font-medium text-gray-400">
                                                 <div className="border-b border-r border-b-white/20 border-r-white/10 bg-white/5 px-4 py-2 text-white">
-                                                    Login.js
+                                                    Login
                                                 </div>
-                                                <div className="border-r border-gray-600/10 px-4 py-2">Auth.js</div>
                                             </div>
                                         </div>
-                                        <div className="px-6 pb-14 pt-6">{/* Your code example */}</div>
+                                        <div className="px-6 pb-14 pt-6 text-white">
+                                            {`curl --location 'http://localhost:5000/api/auth/login' \\
+                                            --header 'Content-Type: application/json' \\
+                                            --data-raw '{"email":"email@interfocus.com.br",
+                                            "password":"admin"}'`}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -184,11 +226,11 @@ const HomePage = () => {
                                 <div className="flex min-w-0 gap-x-4">
                                     <img
                                         alt=""
-                                        src={person.imageUrl}
+                                        src="https://imagizer.imageshack.com/img923/8568/Hyf3yA.png"
                                         className="h-12 w-12 flex-none rounded-full bg-gray-50"
                                     />
                                     <div className="min-w-0 flex-auto">
-                                        <p className="text-sm font-semibold text-gray-900">{person.name}</p>
+                                        <p className="text-sm font-semibold text-gray-900">{person.email.split('@')[0]}</p>
                                         <p className="mt-1 truncate text-xs text-gray-500">{person.email}</p>
                                     </div>
                                 </div>
@@ -204,7 +246,6 @@ const HomePage = () => {
                         ))}
                     </ul>
 
-                    {/* Controles de Paginação */}
                     <div className="flex justify-between items-center mt-4">
                         <button
                             onClick={prevPage}

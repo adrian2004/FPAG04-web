@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputField from "../../assets/components/InputField";
 import Checkbox from '../../assets/components/Checkbox';
@@ -11,6 +11,30 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error('Erro ao conectar ao servidor:', error);
+            }
+        };
+
+        checkAuth();
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault()
