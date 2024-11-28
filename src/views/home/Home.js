@@ -255,8 +255,7 @@ const HomePage = () => {
                     <div className="mx-auto max-w-2xl lg:mx-0">
                         <h2 className="text-5xl font-semibold tracking-tight text-[#0c53a2] sm:text-7xl">Desenvolvimento</h2>
                         <p className="mt-8 text-pretty text-black font-medium text-black sm:text-xl/8">
-                            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                            fugiat veniam occaecat fugiat.
+                            Como foi a trilha e o time que realizou o projeto? Veja os responsáveis e em números como foi o desenvolvimento.
                         </p>
                     </div>
                     <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
