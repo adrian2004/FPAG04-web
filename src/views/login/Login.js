@@ -151,7 +151,7 @@ const LoginPage = () => {
                             </a>
                         </div>
                         <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base bg-[#0c53a2] font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700">
-                            Sign In
+                            Entrar
                         </button>
                     </form>
                 </div>

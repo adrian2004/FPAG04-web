@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import apiIcon from '../../assets/img/home/api.png';
 import homeIcon from '../../assets/img/home/home.png';
 import logoutIcon from '../../assets/img/home/logout.png';
-// import { people } from '../../variables/people';
 import statusImage from '../../assets/img/home/Status.jpg';
 import performance from '../../assets/img/home/Performance.jpg';
 import seguranca from '../../assets/img/home/Seguranca.jpg';
@@ -267,31 +266,32 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                <div class="fixed z-50 inset-x-0 bottom-0 h-16 mb-4">
+                <div className="fixed z-50 inset-x-0 bottom-0 h-16 mb-4">
                     <div
-                        class="flex items-center justify-between bg-white bg-opacity-80 backdrop-blur-md rounded-full px-6 py-3 shadow-lg w-[20rem] mx-auto transition-all duration-300 hover:shadow-xl hover:bg-opacity-90"
+                        className="flex items-center justify-between bg-white bg-opacity-80 backdrop-blur-md rounded-full px-6 py-3 shadow-lg w-[20rem] mx-auto transition-all duration-300 hover:shadow-xl hover:bg-opacity-90"
                     >
-                        <button
-                            class="text-red-500 hover:text-red-600 mx-2 transition-transform duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 rounded-full"
+                        <a
+                            href='/api-docs'
+                            className="text-red-500 hover:text-red-600 mx-2 transition-transform duration-200 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 rounded-full"
                         >
-                            <img src={apiIcon} alt="Dashboard Icon" class="h-6 w-6" />
+                            <img src={apiIcon} alt="Dashboard Icon" className="h-6 w-6" />
 
-                        </button>
+                        </a>
                         <button
-                            class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out hover:rotate-12 focus:outline-none focus:ring-2 rounded-full"
+                            className="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out hover:rotate-12 focus:outline-none focus:ring-2 rounded-full"
                         >
-                            <img src={homeIcon} alt="Home Icon" class="h-6 w-6" />
+                            <img src={homeIcon} alt="Home Icon" className="h-6 w-6" />
                         </button>
 
                         <a
-                            href='/logout' class="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out focus:outline-none hover:scale-110 focus:ring-2 rounded-full"
+                            href='/logout' className="text-gray-600 hover:text-gray-800 mx-2 transition-all duration-200 ease-in-out focus:outline-none hover:scale-110 focus:ring-2 rounded-full"
                         >
-                            <img src={logoutIcon} alt="Dashboard Icon" class="h-6 w-6" />
+                            <img src={logoutIcon} alt="Dashboard Icon" className="h-6 w-6" />
                         </a>
                     </div>
                 </div>
             </div>
-            <div className=" overflow-hidden py-5 sm:pt-10 sm:pb-20">
+            <div className="overflow-hidden py-5 sm:pt-10 sm:pb-20">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:mx-0">
                         <h2 className="text-5xl font-semibold tracking-tight text-[#0c53a2] sm:text-7xl">Desenvolvimento</h2>
@@ -318,22 +318,16 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <footer class="bg-white rounded-t-[50px] pt-5 pb-20">
-                <div class="container mx-auto text-center">
-                    <div class="flex justify-center items-center mb-6">
-                        <img src={Footer} alt="Motion Logo" class="h-12 w-auto mr-2" />
+            <footer className="bg-white rounded-t-[50px] pt-5 pb-20">
+                <div className="container mx-auto text-center">
+                    <div className="flex justify-center items-center mb-6">
+                        <img src={Footer} alt="Motion Logo" className="h-12 w-auto mr-2" />
                     </div>
 
-                    <div class="flex justify-center space-x-6 mb-6">
-                        <a href="#">
-                            <SocialIcon url="https://www.instagram.com/interfocus.tecnologia?igsh=YmR2Mnd2ejE5ZHpq" network="instagram" bgColor="#0c53a2" />
-                        </a>
-                        <a href="#">
-                            <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" network="facebook" bgColor="#0c53a2" />
-                        </a>
-                        <a href="#">
-                            <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" bgColor="#0c53a2" />
-                        </a>
+                    <div className="flex justify-center space-x-6 mb-6">
+                        <SocialIcon url="https://www.instagram.com/interfocus.tecnologia?igsh=YmR2Mnd2ejE5ZHpq" network="instagram" bgColor="#0c53a2" />
+                        <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" network="facebook" bgColor="#0c53a2" />
+                        <SocialIcon url="https://br.linkedin.com/company/interfocus-tecnologia" bgColor="#0c53a2" />
                     </div>
 
                     <p className="text-sm">
