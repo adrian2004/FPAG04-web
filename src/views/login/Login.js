@@ -47,8 +47,8 @@ const LoginPage = () => {
                                     });
                                     if (res.ok) {
                                         localStorage.setItem('token', responseJson.token);
-                                        
-                                        navigate('/'); 
+
+                                        navigate('/');
                                     }
                                 } catch (error) {
                                     console.log('NOTOK');
@@ -73,69 +73,70 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex h-screen w-full items-center justify-between px-4">
-            <div className="w-full max-w-md bg-white p-8 rounded-lg mr-auto lg:ml-60">
-                <h4 className="mb-4 text-4xl font-bold text-[#2d2d2d] text-left">
-                    Entrar
-                </h4>
-                <p className="mb-6 text-left text-[#b1b1b1]">
-                    Digite seu e-mail e senha para entrar!
-                </p>
-                {error && (
-                    <div
-                        className="mt-1 p-2 text-sm text-red-500 bg-red-100 rounded-md"
-                        role="alert"
-                    >
-                        {error}
-                    </div>
-                )}
-                <form onSubmit={handleLogin} className="space-y-4">
-                    <InputField
-                        variant="auth"
-                        extra="mb-3"
-                        label="Email"
-                        placeholder="admin@interfocus.com.br"
-                        id="email"
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-
-                    <InputField
-                        variant="auth"
-                        extra="mb-3"
-                        label="Senha"
-                        placeholder="Senha"
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center">
-                            <Checkbox />
-                            <p className="ml-2 text-sm font-medium text-navy-700">
-                                Lembre-me
-                            </p>
-                        </div>
-                        <a
-                            href="/recover"
-                            className="text-sm font-medium text-brand-500 hover:text-brand-600 hover:text-[#0c53a2] transition duration-200"
+        <div className="flex flex-col-reverse lg:flex-row h-screen w-full">
+            {/* Formulário de Login */}
+            <div className="flex flex-col items-center justify-center w-full">
+                <div className="w-full max-w-lg bg-white p-8 rounded-lg">
+                    <h4 className="mb-4 text-4xl font-bold text-[#2d2d2d] text-center lg:text-left">
+                        Entrar
+                    </h4>
+                    <p className="mb-6 text-center text-[#b1b1b1] lg:text-left">
+                        Digite seu e-mail e senha para entrar!
+                    </p>
+                    {error && (
+                        <div
+                            className="mt-1 p-2 text-sm text-red-500 bg-red-100 rounded-md"
+                            role="alert"
                         >
-                            Esqueceu a senha?
-                        </a>
-                    </div>
-
-                    <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base bg-[#0c53a2] font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700">
-                    Sign In
-                </button>
-                </form>
+                            {error}
+                        </div>
+                    )}
+                    <form onSubmit={handleLogin} className="space-y-4 w-full">
+                        <InputField
+                            variant="auth"
+                            extra="mb-3 w-full"
+                            label="Email"
+                            placeholder="admin@interfocus.com.br"
+                            id="email"
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <InputField
+                            variant="auth"
+                            extra="mb-3 w-full"
+                            label="Senha"
+                            placeholder="Senha"
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center">
+                                <Checkbox />
+                                <p className="ml-2 text-sm font-medium text-navy-700">
+                                    Lembre-me
+                                </p>
+                            </div>
+                            <a
+                                href="/recover"
+                                className="text-sm font-medium text-brand-500 hover:text-brand-600 hover:text-[#0c53a2] transition duration-200"
+                            >
+                                Esqueceu a senha?
+                            </a>
+                        </div>
+                        <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base bg-[#0c53a2] font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            <div className="absolute right-0 h-full min-h-screen w-full md:w-[50%] lg:w-[49vw] 2xl:w-[44vw]">
+            {/* Imagem Responsiva */}
+            <div className="w-full h-[300vh] md:h-[400vh] lg:h-full">
                 <div
-                    className="bg-image flex h-full w-full items-end justify-center bg-cover bg-center lg:rounded-bl-[120px] xl:rounded-bl-[200px]"
+                    className="bg-image h-full w-full bg-cover bg-center lg:rounded-bl-[120px] xl:rounded-bl-[200px]"
                 />
             </div>
         </div>

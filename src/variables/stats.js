@@ -1,6 +1,6 @@
 export const stats = [
-    { name: 'Offices worldwide', value: '12' },
-    { name: 'Full-time colleagues', value: '300+' },
-    { name: 'Hours per week', value: '40' },
-    { name: 'Paid time off', value: 'Unlimited' },
+    { name: 'Tecnologias', value: '10+' },
+    { name: 'Desenvolvedores', value: '5' },
+    { name: 'Semestre', value: '1' },
+    { name: 'Status ', value: 'Concluído' },
 ]
